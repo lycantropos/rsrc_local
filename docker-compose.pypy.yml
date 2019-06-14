@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  rsrc_local-pypy:
+    build:
+      context: .
+      args:
+      - PYTHON_IMAGE=${PYPY_IMAGE_NAME}
+      - PYTHON_IMAGE_VERSION=${PYPY_IMAGE_VERSION}
+    image: lycantropos/rsrc_local-pypy:0.0.0
+    volumes:
+      - ./rsrc_local/:/opt/rsrc_local/rsrc_local/
+      - ./tests/:/opt/rsrc_local/tests/
+      - ./README.md:/opt/rsrc_local/README.md
+      - ./setup.py:/opt/rsrc_local/setup.py
+      - ./setup.cfg:/opt/rsrc_local/setup.cfg
+    entrypoint: pypy3
+    command: setup.py test
