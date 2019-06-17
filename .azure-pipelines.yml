@@ -33,7 +33,13 @@ jobs:
         displayName: 'Install packaging tools'
       - script: python -m pip install --upgrade codecov
         displayName: 'Install codecov'
-      - script: python setup.py test
+      - script: python -m pip install -r requirements-tests.txt
+        displayName: 'Install tests requirements'
+      - script: python -m pip install rsrc
+        displayName: 'Install base package'
+      - script: python -m pip install -e .
+        displayName: 'Install in editable mode'
+      - script: pytest
         displayName: 'Run tests'
       - script: python -m codecov -f coverage.xml -X gcov
         condition: succeeded()
@@ -64,7 +70,13 @@ jobs:
         displayName: 'Install packaging tools'
       - script: python -m pip install --upgrade codecov
         displayName: 'Install codecov'
-      - script: python setup.py test
+      - script: python -m pip install -r requirements-tests.txt
+        displayName: 'Install tests requirements'
+      - script: python -m pip install rsrc
+        displayName: 'Install base package'
+      - script: python -m pip install -e .
+        displayName: 'Install in editable mode'
+      - script: pytest
         displayName: 'Run tests'
       - script: python -m codecov -f coverage.xml -X gcov
         condition: succeeded()
