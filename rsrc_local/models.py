@@ -147,7 +147,7 @@ class File(FileLikeStream):
                 source_file = stack.enter_context(
                         source.open(binary_mode=True))
                 destination_file = stack.enter_context(
-                        self.open(binary_mode=True))
+                        self._path.open(mode='wb'))
                 shutil.copyfileobj(source_file, destination_file)
         else:
             source.send(self, **kwargs)
