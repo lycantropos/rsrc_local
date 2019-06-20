@@ -1,5 +1,6 @@
 import os
 import shutil
+from contextlib import ExitStack
 from errno import (EINVAL,
                    EISDIR,
                    ENOTDIR)
@@ -16,6 +17,7 @@ from reprit import seekers
 from reprit.base import generate_repr
 from rsrc.models import (Base,
                          Container,
+                         FileLikeStream,
                          Stream,
                          URL)
 
@@ -82,7 +84,7 @@ class Directory(Container):
         return cls(path)
 
 
-class File(Stream[str]):
+class File(FileLikeStream):
     __slots__ = ('_path',)
 
     def __init__(self, path: Path) -> None:
@@ -119,8 +121,10 @@ class File(Stream[str]):
     def open(self,
              *,
              binary_mode: bool = False,
-             encoding: str = None) -> IO:
-        return self._path.open(mode='rb' if binary_mode else 'r',
+             encoding: str = None,
+             **kwargs: Any) -> IO:
+        return self._path.open(**kwargs,
+                               mode='rb' if binary_mode else 'r',
                                encoding=encoding)
 
     def send(self, destination: Base, **kwargs: Any) -> None:
@@ -138,6 +142,13 @@ class File(Stream[str]):
                             .format(type=type(source)))
         if isinstance(source, File):
             shutil.copy(str(source), str(self))
+        elif isinstance(source, FileLikeStream):
+            with ExitStack() as stack:
+                source_file = stack.enter_context(
+                        source.open(binary_mode=True))
+                destination_file = stack.enter_context(
+                        self.open(binary_mode=True))
+                shutil.copyfileobj(source_file, destination_file)
         else:
             source.send(self, **kwargs)
 

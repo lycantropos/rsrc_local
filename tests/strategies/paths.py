@@ -5,9 +5,12 @@ from typing import Tuple
 
 from hypothesis import strategies
 
-from tests.utils import touch
+from tests.utils import (temporary_directory_path_string,
+                         touch)
 
-existent_directories_paths_strings = strategies.builds(mkdtemp)
+existent_directories_paths_strings = strategies.builds(
+        mkdtemp,
+        dir=strategies.just(temporary_directory_path_string))
 
 
 def fill_directory(path_string_with_counts: Tuple[str, int, int]) -> str:
@@ -27,7 +30,9 @@ non_empty_directories_paths_strings = (
     strategies.tuples(existent_directories_paths_strings,
                       sub_directories_counts,
                       sub_files_counts).map(fill_directory))
-non_existent_paths_strings = strategies.builds(mktemp)
+non_existent_paths_strings = strategies.builds(
+        mktemp,
+        dir=strategies.just(temporary_directory_path_string))
 
 
 def make_existent(file_path_string: str) -> str:

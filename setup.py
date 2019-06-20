@@ -28,11 +28,7 @@ if sys.platform == 'win32':
 
 project_base_url = 'https://github.com/lycantropos/rsrc_local/'
 
-install_requires = [
-    'memoir>=0.0.1',
-    'reprit>=0.0.1',
-    'rsrc>=0.0.2',
-]
+install_requires = Path('requirements.txt').read_text()
 setup_requires = [
     'pytest-runner>=4.2',
 ]

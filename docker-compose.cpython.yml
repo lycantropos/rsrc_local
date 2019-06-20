@@ -7,11 +7,13 @@ services:
       args:
       - PYTHON_IMAGE=${CPYTHON_IMAGE_NAME}
       - PYTHON_IMAGE_VERSION=${CPYTHON_IMAGE_VERSION}
-    image: lycantropos/rsrc_local-cpython:0.0.1
+    image: lycantropos/rsrc_local-cpython:0.0.2
     volumes:
       - ./rsrc_local/:/opt/rsrc_local/rsrc_local/
       - ./tests/:/opt/rsrc_local/tests/
       - ./README.md:/opt/rsrc_local/README.md
-      - ./setup.py:/opt/rsrc_local/setup.py
+      - ./requirements-tests.txt:/opt/rsrc_local/requirements-tests.txt
+      - ./requirements.txt:/opt/rsrc_local/requirements.txt
       - ./setup.cfg:/opt/rsrc_local/setup.cfg
+      - ./setup.py:/opt/rsrc_local/setup.py
     entrypoint: pytest

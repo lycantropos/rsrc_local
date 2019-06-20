@@ -35,8 +35,8 @@ jobs:
         displayName: 'Install codecov'
       - script: python -m pip install -r requirements-tests.txt
         displayName: 'Install tests requirements'
-      - script: python -m pip install rsrc
-        displayName: 'Install base package'
+      - script: python -m pip install -r requirements.txt
+        displayName: 'Install requirements'
       - script: python -m pip install -e .
         displayName: 'Install in editable mode'
       - script: pytest
@@ -72,8 +72,8 @@ jobs:
         displayName: 'Install codecov'
       - script: python -m pip install -r requirements-tests.txt
         displayName: 'Install tests requirements'
-      - script: python -m pip install rsrc
-        displayName: 'Install base package'
+      - script: python -m pip install -r requirements.txt
+        displayName: 'Install requirements'
       - script: python -m pip install -e .
         displayName: 'Install in editable mode'
       - script: pytest

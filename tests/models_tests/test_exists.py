@@ -1,4 +1,5 @@
 import os
+import shutil
 
 import pytest
 from hypothesis import given
@@ -19,6 +20,15 @@ def test_existent_file(file: File) -> None:
 @given(strategies.non_existent_files)
 def test_non_existent_file(file: File) -> None:
     assert not file.exists()
+
+
+@given(strategies.existent_directories)
+def test_removing_directory(directory: Directory) -> None:
+    path_string = str(directory)
+
+    shutil.rmtree(path_string)
+
+    assert not directory.exists()
 
 
 @given(strategies.non_existent_files)

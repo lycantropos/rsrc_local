@@ -5,7 +5,7 @@ rsrc_local
 [![](https://dev.azure.com/azatibrakov/rsrc_local/_apis/build/status/lycantropos.rsrc_local?branchName=master)](https://dev.azure.com/azatibrakov/rsrc_local/_build/latest?definitionId=2&branchName=master "Azure Pipelines")
 [![](https://codecov.io/gh/lycantropos/rsrc_local/branch/master/graph/badge.svg)](https://codecov.io/gh/lycantropos/rsrc_local "Codecov")
 [![](https://img.shields.io/github/license/lycantropos/rsrc_local.svg)](https://github.com/lycantropos/rsrc_local/blob/master/LICENSE "License")
-[![](https://badge.fury.io/py/rsrc_local.svg)](https://badge.fury.io/py/rsrc_local "PyPI")
+[![](https://badge.fury.io/py/rsrc-local.svg)](https://badge.fury.io/py/rsrc-local "PyPI")
 
 In what follows
 - `python` is an alias for `python3.5` or any later
@@ -45,6 +45,16 @@ Download the latest version from `GitHub` repository
 git clone https://github.com/lycantropos/rsrc_local.git
 cd rsrc_local
 ```
+
+Install dependencies:
+- with `CPython`
+  ```bash
+  python -m pip install -r requirements.txt
+  ```
+- with `PyPy`
+  ```bash
+  pypy -m pip install -r requirements.txt
+  ```
 
 Install:
 - with `CPython`
@@ -108,15 +118,20 @@ as separate pull request.
 
 ### Running tests
 
-Plain:
+Install dependencies:
 - with `CPython`
   ```bash
-  python setup.py test
+  python -m pip install -r requirements-tests.txt
   ```
 - with `PyPy`
   ```bash
-  pypy setup.py test
+  pypy -m pip install -r requirements-tests.txt
   ```
+
+Plain
+```bash
+pytest
+```
 
 Inside `Docker` container:
 - with `CPython`

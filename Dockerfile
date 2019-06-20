@@ -9,9 +9,10 @@ COPY rsrc_local/ rsrc_local/
 COPY tests/ tests/
 COPY README.md .
 COPY requirements-tests.txt .
-COPY setup.py .
+COPY requirements.txt .
 COPY setup.cfg .
+COPY setup.py .
 
 RUN pip install -r requirements-tests.txt
-RUN pip install rsrc
+RUN pip install -r requirements.txt
 RUN pip install -e .
