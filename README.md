@@ -66,6 +66,25 @@ Install:
   pypy setup.py install
   ```
 
+Usage
+-----
+
+```python
+>>> from rsrc.base import deserialize
+>>> import os
+>>> directory = deserialize(os.getcwd())
+>>> directory.exists()
+True
+>>> next(iter(directory), None) is not None  # directory is not empty
+True
+>>> from rsrc_local.models import File
+>>> is_local_file = File.__instancecheck__
+>>> file = next(filter(is_local_file, directory))
+>>> file.exists()
+True
+
+```
+
 Development
 -----------
 

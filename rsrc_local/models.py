@@ -75,13 +75,12 @@ class Directory(Container):
 
     @classmethod
     def from_string(cls: Type[Domain], string: str) -> Domain:
-        path = Path(string)
-        if path.is_file():
+        if os.path.isfile(string):
             raise ValueError('Invalid argument: "{argument}" '
                              'supposed to be a path to directory, '
                              'but found file.'
                              .format(argument=string))
-        return cls(path)
+        return cls(Path(string))
 
 
 class File(FileLikeStream):
@@ -127,7 +126,7 @@ class File(FileLikeStream):
                                mode='rb' if binary_mode else 'r',
                                encoding=encoding)
 
-    def send(self, destination: Base, **kwargs: Any) -> None:
+    def send(self, destination: Stream, **kwargs: Any) -> None:
         if not isinstance(destination, Stream):
             raise TypeError('Unsupported destination type: {type}.'
                             .format(type=type(destination)))
@@ -136,7 +135,7 @@ class File(FileLikeStream):
         else:
             destination.receive(self, **kwargs)
 
-    def receive(self, source: Base, **kwargs: Any) -> None:
+    def receive(self, source: Stream, **kwargs: Any) -> None:
         if not isinstance(source, Stream):
             raise TypeError('Unsupported destination type: {type}.'
                             .format(type=type(source)))
@@ -158,13 +157,12 @@ class File(FileLikeStream):
 
     @classmethod
     def from_string(cls: Type[Domain], string: str) -> Domain:
-        path = Path(string)
-        if path.is_dir():
+        if os.path.isdir(string):
             raise ValueError('Invalid argument: "{argument}" '
                              'supposed to be a path to file, '
                              'but found directory.'
                              .format(argument=string))
-        return cls(path)
+        return cls(Path(string))
 
 
 def _to_os_error(*,

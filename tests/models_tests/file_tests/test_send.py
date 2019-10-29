@@ -1,7 +1,8 @@
 import pytest
 from hypothesis import given
 
-from rsrc_local.models import File
+from rsrc_local.models import (Directory,
+                               File)
 from tests import strategies
 
 
@@ -28,6 +29,6 @@ def test_non_existent_source(existent_file: File,
 
 @given(strategies.existent_files, strategies.existent_directories)
 def test_non_stream_destination(existent_file: File,
-                                directory: File) -> None:
+                                directory: Directory) -> None:
     with pytest.raises(TypeError):
         existent_file.send(directory)

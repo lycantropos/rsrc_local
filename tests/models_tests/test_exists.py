@@ -1,9 +1,11 @@
 import os
 import shutil
+from typing import (Callable,
+                    Tuple)
 
 import pytest
 from hypothesis import given
-from rsrc.base import deserialize
+from rsrc.models import Base
 
 from rsrc_local.models import (Directory,
                                File)
@@ -51,8 +53,11 @@ def test_creating_file_with_same_name(directory: Directory) -> None:
         directory.exists()
 
 
-@given(strategies.paths_strings)
-def test_connection_with_deserialize(string: str) -> None:
-    result = deserialize(string)
+@given(strategies.resources_strings_with_deserializers)
+def test_connection_with_deserializer(
+        string_with_deserializer: Tuple[str, Callable[[str], Base]]) -> None:
+    string, deserializer = string_with_deserializer
+
+    result = deserializer(string)
 
     assert implication(not result.exists(), not isinstance(result, Directory))

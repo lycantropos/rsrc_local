@@ -13,4 +13,5 @@ from .paths import (existent_directories_paths_strings,
                     files_paths_strings,
                     files_paths_url_strings,
                     paths_strings,
-                    paths_urls_strings)
+                    paths_urls_strings,
+                    resources_strings_with_deserializers)

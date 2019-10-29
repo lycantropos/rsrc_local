@@ -5,6 +5,8 @@ from typing import Tuple
 
 from hypothesis import strategies
 
+from rsrc_local.base import (deserialize_path,
+                             deserialize_url)
 from tests.utils import (temporary_directory_path_string,
                          touch)
 
@@ -61,3 +63,6 @@ files_paths_url_strings = (non_existent_paths_url_strings
                            | existent_files_paths_url_strings)
 paths_urls_strings = (existent_directories_paths_url_strings
                       | files_paths_url_strings)
+resources_strings_with_deserializers = (
+        strategies.tuples(paths_urls_strings, strategies.just(deserialize_url))
+        | strategies.tuples(paths_strings, strategies.just(deserialize_path)))
