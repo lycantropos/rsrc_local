@@ -28,12 +28,6 @@ if sys.platform == 'win32':
 
 project_base_url = 'https://github.com/lycantropos/rsrc_local/'
 
-install_requires = Path('requirements.txt').read_text()
-setup_requires = [
-    'pytest-runner>=4.2',
-]
-tests_require = Path('requirements-tests.txt').read_text()
-
 setup(name=rsrc_local.__name__,
       packages=find_packages(exclude=('tests', 'tests.*')),
       version=rsrc_local.__version__,
@@ -46,6 +40,4 @@ setup(name=rsrc_local.__name__,
       download_url=project_base_url + 'archive/master.zip',
       python_requires='>=3.5.3',
       entry_points={plugins.__name__: plugins_entry_points},
-      install_requires=install_requires,
-      setup_requires=setup_requires,
-      tests_require=tests_require)
+      install_requires=Path('requirements.txt').read_text(encoding='utf-8'))
