@@ -1,4 +1,3 @@
-import sys
 from pathlib import Path
 from string import ascii_lowercase
 
@@ -17,14 +16,13 @@ plugins_entry_points = [
                            module_name=base.__name__,
                            function_name=base.deserialize_url.__qualname__),
 ]
-if sys.platform == 'win32':
-    # workaround for supporting absolute Windows paths with drive letters
-    # which may be considered as a scheme during URL parsing
-    for drive_letter in ascii_lowercase:
-        plugins_entry_points.append(plugins.to_entry_point(
-                id_=plugins.to_id(drive_letter),
-                module_name=base.__name__,
-                function_name=base.deserialize_path.__qualname__))
+# workaround for supporting absolute Windows paths with drive letters
+# which may be considered as a scheme during URL parsing
+for drive_letter in ascii_lowercase:
+    plugins_entry_points.append(plugins.to_entry_point(
+            id_=plugins.to_id(drive_letter),
+            module_name=base.__name__,
+            function_name=base.deserialize_path.__qualname__))
 
 project_base_url = 'https://github.com/lycantropos/rsrc_local/'
 
